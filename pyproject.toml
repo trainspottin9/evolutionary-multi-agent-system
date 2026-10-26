@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=65"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "evoagents-hkust"
+version = "0.1.0"
+requires-python = ">=3.11"
+description = "Evolutionary multi-agent collaboration prototype"
+
+[project.scripts]
+evoagents = "evoagents.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["evoagents*"]

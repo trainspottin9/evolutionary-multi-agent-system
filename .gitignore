@@ -1,0 +1,8 @@
+.evoagents/
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+*.egg-info/
+HKUST Canvas - Topic_ Final Project Specification_ Evolutionary Multi-Agent Collaboration System.html
+HKUST Canvas - Topic_ Final Project Specification_ Evolutionary Multi-Agent Collaboration System_files/
