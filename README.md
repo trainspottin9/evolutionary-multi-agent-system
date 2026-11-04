@@ -1,39 +1,34 @@
-# Evolutionary Multi-Agent Collaboration System
+# Evolutionary Multi-Agent System
 
-Python 3.11+ backend prototype for the HKUST final project. The live model backend is **DeepSeek**. No OpenAI or Anthropic API is used. The UI is a command line interface; generated documents are Markdown or plain text.
+An evolutionary multi-agent collaboration system for the HKUST NLP final project. It provides a local Web workspace, CLI, task review, agent memory, and an evaluation runner. Runtime state is stored in the repository's ignored `.evo/` directory. The Web server uses port 8768 by default.
+
+## Frontend changes
+
+- A short navigation with five destinations: tasks, inbox, group chat, private chat, and memory.
+- One task workspace with a small composer, task list, and selected task detail. Review status is visible beside execution status.
+- Task details show the result first. The technical action log and review history are available in a collapsed **查看运行记录** section.
+- The inbox shows pending reviews and agent questions; the navigation count updates after refresh.
+- Mobile layout stacks the task list and detail and moves navigation to a compact row.
+
+The task review and revision workflow was inspired by [Multica](https://github.com/multica-ai/multica)'s high-level workflow. No Multica source code or UI was copied. See [docs/WORKFLOW.md](docs/WORKFLOW.md) for the exact state transitions and local API.
 
 ## Run
 
-```powershell
-python -m pip install -e .
-$env:DEEPSEEK_API_KEY = "<team key>"
-python -m evoagents.cli run "Research a topic, implement a Python summary script, and review it"
-python -m evoagents.cli chat group
-python -m evoagents.cli chat dm:coder
-python -m evoagents.cli metrics
+From the repository root, configure an HKGAI key with `python3 -m evo setup-hkgai-key` in an interactive terminal, or set `HKGAI_API_KEY`. The key is stored or read outside the repository. Keep the terminal open while using the browser page.
+
+```sh
+python3 -m evo web
 ```
 
-Agent code execution requires Docker with the `python:3.11-alpine` image available. If Docker is unavailable, the `python` tool fails closed. Each agent writes under `.evoagents/agents/<agent>/`. All state and secrets stay outside version control. Search requires outbound HTTPS.
+Open [http://127.0.0.1:8768](http://127.0.0.1:8768). The default port can be changed with `python3 -m evo web --port 8769`. The server binds only to localhost. Docker is required only for agent-authored Python and Git operations.
 
-For Git commits, configure each contributor's authentic `user.name` and `user.email` in their own Git environment. Agent private repositories can be connected to team-owned GitHub remotes; Git push requires an explicit human confirmation.
+To install the CLI command, run `python3 -m pip install -e .` and then use `evo-v3 web`. Running `python3 -m evo` from the repository root works without installation.
 
-## Verify
+## Verification
 
-```powershell
-python -m unittest discover -v
-python benchmark.py
+```sh
+python3 -m unittest discover -s tests -v
+python3 -m compileall -q evo tests
 ```
 
-The benchmark uses a deterministic protocol fixture. It is **not** an LLM evaluation or the course test set. See [architecture](ARCHITECTURE.md) and [performance report](REPORT.md).
-
-When the course releases a task set, format it as JSONL with `{"id":"task-1","goal":"...","expected_contains":"optional rubric marker"}` per line and run:
-
-```powershell
-python -m evoagents.evaluate course_tasks.jsonl --output evidence/run-01.json
-```
-
-The evaluator preserves per-task outputs, timing and memory counts. `expected_contains` is only a simple optional check; use the course rubric to grade substantive correctness.
-
-## Delivery status
-
-The repository URL, team roster, real contribution history, Git screenshots and course-set metrics require team-owned evidence. See [submission checklist](SUBMISSION.md). Do not present fixture results as final evaluation scores.
+The 18 tests use temporary state and scripted model responses. The official course dataset and memory ablation remain pending; see [docs/EVALUATION_REPORT.md](docs/EVALUATION_REPORT.md).

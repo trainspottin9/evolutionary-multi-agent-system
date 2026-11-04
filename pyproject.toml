@@ -1,15 +1,18 @@
 [build-system]
-requires = ["setuptools>=65"]
+requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "evoagents-hkust"
-version = "0.1.0"
-requires-python = ">=3.11"
-description = "Evolutionary multi-agent collaboration prototype"
+name = "evo-collab-v3"
+version = "0.3.0"
+description = "Evolutionary multi-agent collaboration system for the NLP final project"
+requires-python = ">=3.9"
 
 [project.scripts]
-evoagents = "evoagents.cli:main"
+evo-v3 = "evo.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["evoagents*"]
+include = ["evo*"]
+
+[tool.setuptools.package-data]
+evo = ["web_assets/*"]

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EvoCollab</title>
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-icon">E</span><span>EvoCollab</span></div>
+      <nav aria-label="主导航">
+        <button class="nav active" data-view="tasks"><span>▤</span> 任务</button>
+        <button class="nav" data-view="inbox"><span>◎</span> 待处理 <b id="inbox-count" hidden>0</b></button>
+        <button class="nav" data-view="group"><span>◌</span> 群聊</button>
+        <button class="nav" data-view="dm"><span>◍</span> 私聊</button>
+        <button class="nav" data-view="memory"><span>◇</span> 记忆</button>
+      </nav>
+      <div class="sidebar-bottom"><span class="online"></span> 本地运行 <span class="muted">· HKGAI</span></div>
+    </aside>
+
+    <main>
+      <header class="page-head">
+        <div><h1 id="page-title">任务</h1><p id="page-subtitle">提交目标，查看代理执行与审查进度。</p></div>
+        <button class="icon-button" id="refresh" aria-label="刷新数据" title="刷新数据">↻</button>
+      </header>
+
+      <section id="tasks" class="view active">
+        <div class="compose surface">
+          <label for="goal">新任务</label>
+          <textarea id="goal" rows="3" placeholder="描述希望代理完成的目标…"></textarea>
+          <div class="compose-foot"><span>代理会自行规划和分工</span><button class="primary" id="run-task">开始任务</button></div>
+        </div>
+        <div class="workspace">
+          <section class="task-column surface"><div class="section-title"><h2>任务列表</h2><span id="task-count">0</span></div><div id="task-list" class="task-list"></div></section>
+          <section id="task-detail" class="detail surface"><div class="empty-state"><strong>选择一个任务</strong><p>这里会显示执行结果、审查操作与运行记录。</p></div></section>
+        </div>
+      </section>
+
+      <section id="inbox" class="view"><div class="section-title"><h2>待处理事项</h2><span id="pending-count">0</span></div><p class="section-desc">审查已完成的任务，或回应代理的请求。</p><div id="inbox-list" class="inbox-list"></div></section>
+
+      <section id="group" class="view"><div class="section-title"><h2>群组对话</h2></div><p class="section-desc">与研究员、构建者和审查员讨论。任务日志单独保存在任务详情中。</p><div id="group-messages" class="messages surface"></div><div class="chat-compose surface"><label for="group-input">发给团队</label><textarea id="group-input" rows="2" placeholder="输入消息…"></textarea><div class="align-right"><button class="primary" id="send-group">发送</button></div></div></section>
+
+      <section id="dm" class="view"><div class="section-title"><h2>代理私聊</h2><select id="dm-agent" aria-label="选择代理"><option value="researcher">研究员</option><option value="builder">构建者</option><option value="reviewer">审查员</option></select></div><div id="dm-messages" class="messages surface"></div><div class="chat-compose surface"><label for="dm-input">发送私信</label><textarea id="dm-input" rows="2" placeholder="输入消息…"></textarea><div class="align-right"><button class="primary" id="send-dm">发送</button></div></div></section>
+
+      <section id="memory" class="view"><div class="section-title"><h2>代理记忆</h2><select id="memory-agent" aria-label="选择代理"><option value="researcher">研究员</option><option value="builder">构建者</option><option value="reviewer">审查员</option></select></div><p class="section-desc">每个代理独立保存与任务有关的经验。</p><div id="memory-content"></div></section>
+    </main>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+  <div id="approval" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="approval-title"><div class="dialog surface"><h2 id="approval-title">需要你的决定</h2><p id="approval-prompt"></p><textarea id="approval-answer" rows="3" placeholder="输入答复" hidden></textarea><div class="dialog-actions"><button class="secondary" id="approval-no">拒绝</button><button class="primary" id="approval-yes">批准</button></div></div></div>
+  <script>window.EVO_TOKEN="__TOKEN__"</script>
+  <script src="/app.js" defer></script>
+</body>
+</html>

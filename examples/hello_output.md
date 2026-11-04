@@ -1,0 +1,3 @@
+# Why Independent Agent Memory Helps Repeated Tasks
+
+Independent agent memory allows an agent to store and recall past experiences, including successful strategies, common pitfalls, and lessons learned. When a task is repeated, the agent can retrieve relevant memories to avoid previous mistakes, reuse proven approaches, and reduce redundant computation. This leads to faster, more reliable task completion and continuous improvement over time.

@@ -1,0 +1,1 @@
+{"id":"smoke-1","prompt":"Write a short Markdown note named hello.md explaining why independent agent memory helps repeated tasks, and verify the file exists.","expected_files":["hello.md"],"expected_file_contains":{"hello.md":["memory","repeated tasks"]}}
